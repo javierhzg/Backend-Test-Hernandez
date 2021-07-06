@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select option</title>
+</head>
+<body>
+    <h1>Menu {{ menu.date }}</h1>
+    {% for option in options %}
+        <li>{{ option.option }}</li>
+    {% endfor %}
+    <form action="{% url 'select' menu.id %}" method="post">
+        <select name="option_id" id="option_id" style="width:50%">
+            {% for t in options %}
+                <option value="{{t.id}}"{% if t.id == option_id %} selected{% endif %}>{{t.option}}</option>
+            {% endfor %}
+        </select>
+        {% csrf_token %}
+        <br>
+        {{ form }}
+        <input type="submit">
+    </form>
+</body>
+</html>

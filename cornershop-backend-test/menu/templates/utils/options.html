@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="{% static 'css/datepicker.css' %}" rel="stylesheet" >
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui-timepicker-addon.js' %}"></script>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Menu {{ menu.date }}</h1>
+
+    <form action="{% url 'send' menu.id%}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Send">
+    </form>
+
+    <form action="{% url 'options' menu.id%}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit">
+    </form>
+
+    {% for option in options %}
+        <form action="{% url 'options-delete' option.id%}" method="post">
+            <li>{{ option.option }}
+                {% csrf_token %}
+                <input type="submit" value="Delete">
+            </li>
+        </form>
+    {% empty %}
+        <li>No options</li>
+    {% endfor %}
+
+</body>
+</html>

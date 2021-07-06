@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="{% static 'css/datepicker.css' %}" rel="stylesheet" >
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui-timepicker-addon.js' %}"></script>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Days</h1>
+
+<form action="{% url 'menu' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+</form>
+
+{% for menu in menus %}
+    <form action="{% url 'options' menu.id %}" method="post">
+        <li>{{ menu.date }}
+            {% csrf_token %}
+            <input type="submit">
+        </li>
+    </form>
+{% empty %}
+    <li>No menu</li>
+{% endfor %}
+<script>
+ $('.datepicker').datepicker();
+</script>
+
+</body>
+</html>
